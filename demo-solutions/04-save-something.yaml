@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: save-something
+spec:
+  workspaces:
+    - name: output
+      description: Working directory.
+  params:
+    - name: something
+      type: string
+      default: "Hello World!"
+    - name: filename
+      type: string
+      default: "./awesome-file.txt"
+  steps:
+    - name: save
+      image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        echo "$(params.something)" >> "$(workspaces.output.path)/$(params.filename)"

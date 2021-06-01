@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: ping
+spec:
+  steps:
+    - name: ping
+      image: ubuntu
+      command:
+        - echo
+      args:
+        - "Ping?"
+    - name: pong
+      image: ubuntu
+      command:
+        - echo
+      args:
+        - "Pong!"

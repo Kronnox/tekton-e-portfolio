@@ -1,0 +1,52 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: say-more
+spec:
+  tasks:
+  - name: line1
+    taskRef:
+      name: say-something
+    params:
+      - name: something
+        value: "Never gonna give you up"
+  - name: line2
+    runAfter:
+     - line1
+    taskRef:
+      name: say-something
+    params:
+      - name: something
+        value: "Never gonna let you down"
+  - name: line3
+    runAfter:
+     - line2
+    taskRef:
+      name: say-something
+    params:
+      - name: something
+        value: "Never gonna run around and desert you"
+  - name: line4
+    runAfter:
+     - line3
+    taskRef:
+      name: say-something
+    params:
+      - name: something
+        value: "Never gonna make you cry"
+  - name: line5
+    runAfter:
+     - line4
+    taskRef:
+      name: say-something
+    params:
+      - name: something
+        value: "Never gonna say goodbye"
+  - name: line6
+    runAfter:
+     - line5
+    taskRef:
+      name: say-something
+    params:
+      - name: something
+        value: "Never gonna tell a lie and hurt you"

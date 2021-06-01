@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: read-something
+spec:
+  workspaces:
+    - name: source
+      description: Working directory.
+  params:
+    - name: filename
+      type: string
+      default: "./awesome-file.txt"
+  steps:
+    - name: read
+      image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        cat "$(workspaces.source.path)/$(params.filename)"

@@ -1,0 +1,95 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: save-more
+spec:
+  workspaces:
+    - name: pipeline-ws1
+  tasks:
+  # save
+  - name: line1
+    taskRef:
+      name: save-something
+    workspaces:
+      - name: output
+        workspace: pipeline-ws1
+    params:
+      - name: something
+        value: "Never gonna give you up"
+  - name: line2
+    runAfter:
+     - line1
+    taskRef:
+      name: save-something
+    workspaces:
+      - name: output
+        workspace: pipeline-ws1
+    params:
+      - name: something
+        value: "Never gonna let you down"
+  - name: line3
+    runAfter:
+     - line2
+    taskRef:
+      name: save-something
+    workspaces:
+      - name: output
+        workspace: pipeline-ws1
+    params:
+      - name: something
+        value: "Never gonna run around and desert you"
+  - name: line4
+    runAfter:
+     - line3
+    taskRef:
+      name: save-something
+    workspaces:
+      - name: output
+        workspace: pipeline-ws1
+    params:
+      - name: something
+        value: "Never gonna make you cry"
+  - name: line5
+    runAfter:
+     - line4
+    taskRef:
+      name: save-something
+    workspaces:
+      - name: output
+        workspace: pipeline-ws1
+    params:
+      - name: something
+        value: "Never gonna say goodbye"
+  - name: line6
+    runAfter:
+     - line5
+    taskRef:
+      name: save-something
+    workspaces:
+      - name: output
+        workspace: pipeline-ws1
+    params:
+      - name: something
+        value: "Never gonna tell a lie and hurt you"
+  # read
+  - name: read-everything
+    runAfter:
+     - line6
+    taskRef:
+      name: read-something
+    workspaces:
+      - name: source
+        workspace: pipeline-ws1
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: run-save-more-
+spec:
+  pipelineRef:
+    name: save-more
+  workspaces:
+    - name: pipeline-ws1
+      persistentVolumeClaim:
+        claimName: task-pv-claim
