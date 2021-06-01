@@ -47,7 +47,6 @@ kubectl get pods --namespace tekton-pipelines --watch
 ```
 
 ## Useful links
-23:41
 
 https://tekton.dev/docs/getting-started/<br>
 https://tekton.dev/docs/dashboard/<br>
